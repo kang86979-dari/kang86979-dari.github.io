@@ -53,15 +53,10 @@
         if (!document.hidden) window.location.href = PLAY_STORE;
       }, 1600);
     } else if (isIOS) {
-      // dari:// 스킴 시도 → 앱이 열리면 페이지가 백그라운드로 감.
-      // 스킴 미탑재/미설치면 아무 일 없음 → App Store로 폴백.
-      var t = Date.now();
-      window.location.href = SCHEME;
-      setTimeout(function () {
-        if (!document.hidden && Date.now() - t < 2500) {
-          window.location.href = APP_STORE;
-        }
-      }, 1400);
+      // iOS는 App Store 직행 — 커스텀 스킴 시도는 미설치 시 사파리
+      // "주소가 유효하지 않음" 경고를 띄움. 설치자는 스토어의 '열기' 버튼 사용.
+      // (향후 유니버설 링크 도입 시 즉시열기로 업그레이드)
+      window.location.href = APP_STORE;
     } else {
       document.getElementById('hint').textContent = '';
     }
